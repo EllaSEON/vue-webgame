@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>구구단</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <div>{{first}} 곱하기 {{second}} 는?</div>
+      <form v-on:submit="onSubmitForm">
+        <input type="number" v-model="value" ref="answer" />
+        <button type="submit">입력</button>
+      </form>
+      <!-- <div>input 값 : {{value}}</div> -->
+      <div id="result">{{result}}</div>
+    </div>
+    <script>
+      const app = new Vue({
+        el: "#root",
+        data: {
+          first: Math.ceil(Math.random() * 9), // 첫번째 숫자
+          second: Math.ceil(Math.random() * 9), // 두번째 숫자
+          value: "", // input값 v-model 과 연결해서 input 을 입력하면 데이터가 자동으로 바뀐다.
+          result: "", // 결과값
+        },
+        methods: {
+          onSubmitForm(e) {
+            e.preventDefault();
+            console.log(this);
+            console.log(this.first, this.second, this.value);
+            if (this.first * this.second == parseInt(this.value)) {
+              this.result = "정답";
+              this.first = Math.ceil(Math.random() * 9);
+              this.second = Math.ceil(Math.random() * 9);
+              this.value = "";
+              this.$refs.answer.focus(); //ref : 태그 선택하는거
+            } else {
+              this.result = "땡";
+              this.value = "";
+            }
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
